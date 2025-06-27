@@ -1,4 +1,4 @@
-# Byte Converter [use it](https://karthikjl.github.io/ByteConverter/)
+# Byte Converter [use it](https://karthikjl.github.io/ByteConverter/index.html)
 
 A sleek, real-time unit converter for data measurements, built with Next.js and enhanced with AI-powered suggestions. This tool provides a seamless experience for developers, students, and anyone working with digital data sizes.
 
