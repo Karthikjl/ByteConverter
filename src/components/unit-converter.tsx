@@ -2,6 +2,7 @@
 
 import { useState, useCallback, ChangeEvent } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,9 @@ function formatValue(value: number): string {
 }
 
 export function UnitConverter() {
+    const { toast } = useToast();
     const [baseValueInBytes, setBaseValueInBytes] = useState(1024 * 1024); 
+    const [editingUnitSymbol, setEditingUnitSymbol] = useState<string | null>(null);
 
     const handleValueChange = useCallback((valueStr: string, fromUnit: Unit) => {
         const numValue = parseFloat(valueStr);
@@ -49,6 +52,24 @@ export function UnitConverter() {
         setBaseValueInBytes(asBytes);
     }, [baseValueInBytes]);
 
+    const handleCopy = useCallback((textToCopy: string) => {
+        if (!textToCopy) return;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            toast({
+                title: "Copied to clipboard",
+                description: `Value "${textToCopy}" has been copied.`,
+            });
+        }).catch(err => {
+            console.error("Failed to copy text: ", err);
+            toast({
+                variant: "destructive",
+                title: "Copy failed",
+                description: "Could not copy text to clipboard.",
+            });
+        });
+        setEditingUnitSymbol(null); // Exit edit mode after copy
+    }, [toast]);
+
     const orderedSymbols = ['B', 'KB', 'MB', 'GB', 'TB'];
     const orderedUnits = orderedSymbols.map(symbol => 
         dataUnits.find(u => u.symbol === symbol)
@@ -60,14 +81,25 @@ export function UnitConverter() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-4 gap-y-6 justify-items-center">
                     {orderedUnits.map((unit) => {
                         const convertedValue = unit.from_base(baseValueInBytes * 8);
+                        const displayValue = formatValue(convertedValue);
                         return (
                             <div key={unit.symbol} className="flex flex-col items-center gap-2 w-full max-w-[160px]">
                                 <Input
                                     type="text"
-                                    value={baseValueInBytes === 0 ? '0' : formatValue(convertedValue)}
+                                    value={editingUnitSymbol === unit.symbol && convertedValue === 0 ? '' : displayValue}
                                     onChange={(e: ChangeEvent<HTMLInputElement>) => handleValueChange(e.target.value, unit)}
-                                    className="text-center text-lg h-12 bg-muted/50 border-input rounded-lg font-mono"
+                                    className="text-center text-lg h-12 bg-muted/50 border-input rounded-lg font-mono cursor-pointer"
                                     aria-label={`${unit.name} value`}
+                                    readOnly={editingUnitSymbol !== unit.symbol}
+                                    onClick={() => setEditingUnitSymbol(unit.symbol)}
+                                    onDoubleClick={() => handleCopy(displayValue)}
+                                    onBlur={() => setEditingUnitSymbol(null)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === 'Escape') {
+                                            setEditingUnitSymbol(null);
+                                            e.currentTarget.blur();
+                                        }
+                                    }}
                                 />
                                 <span className="font-semibold text-muted-foreground">{unit.name}</span>
                                 <div className="flex gap-2">
