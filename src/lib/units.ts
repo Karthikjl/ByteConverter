@@ -20,11 +20,11 @@ export const categories: Category[] = [
     icon: Database,
     units: [
       { name: "Bit", symbol: "b", to_base: (v) => v, from_base: (v) => v },
-      { name: "Byte", symbol: "B", to_base: (v) => v * 8, from_base: (v) => v / 8 },
-      { name: "Kilobyte", symbol: "KB", to_base: (v) => v * 8 * 1024, from_base: (v) => v / (8 * 1024) },
-      { name: "Megabyte", symbol: "MB", to_base: (v) => v * 8 * 1024 ** 2, from_base: (v) => v / (8 * 1024 ** 2) },
-      { name: "Gigabyte", symbol: "GB", to_base: (v) => v * 8 * 1024 ** 3, from_base: (v) => v / (8 * 1024 ** 3) },
-      { name: "Terabyte", symbol: "TB", to_base: (v) => v * 8 * 1024 ** 4, from_base: (v) => v / (8 * 1024 ** 4) },
+      { name: "Bytes", symbol: "B", to_base: (v) => v * 8, from_base: (v) => v / 8 },
+      { name: "KB", symbol: "KB", to_base: (v) => v * 8 * 1024, from_base: (v) => v / (8 * 1024) },
+      { name: "MB", symbol: "MB", to_base: (v) => v * 8 * 1024 ** 2, from_base: (v) => v / (8 * 1024 ** 2) },
+      { name: "GB", symbol: "GB", to_base: (v) => v * 8 * 1024 ** 3, from_base: (v) => v / (8 * 1024 ** 3) },
+      { name: "TB", symbol: "TB", to_base: (v) => v * 8 * 1024 ** 4, from_base: (v) => v / (8 * 1024 ** 4) },
     ],
   },
   {
