@@ -2,22 +2,11 @@
 
 # Dependencies
 /node_modules
-/.pnp
-.pnp.js
-
-# Testing
-/coverage
-
-
-# Production
-/build
 
 # Misc
 .DS_Store
 *.pem
 
-# Vercel
-.vercel
 
 # Local environment variables
 .env.local
