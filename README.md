@@ -2,7 +2,7 @@
 
 A sleek, real-time unit converter for data measurements, built with Next.js and enhanced with AI-powered suggestions. This tool provides a seamless experience for developers, students, and anyone working with digital data sizes.
 
-![Byte Converter Screenshot](https://placehold.co/800x600.png?text=App+Screenshot)
+![Byte Converter Screenshot](https://github.com/user-attachments/assets/3efc9736-d486-43a0-aef9-3b5da0f25f3e)
 
 ## ✨ Features
 
